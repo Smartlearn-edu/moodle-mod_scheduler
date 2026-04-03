@@ -1047,7 +1047,8 @@ class scheduler extends mvc_record_model {
     public function count_bookable_appointments($studentid, $includechangeable = true) {
         global $DB;
 
-        if (!empty($this->bulkbook)) {
+        // Note: cannot use empty() here as the model uses __get magic without __isset.
+        if ($this->data->bulkbook) {
             return -1;
         }
 

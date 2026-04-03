@@ -204,7 +204,7 @@ if ($action == 'bookallslots') {
         throw new moodle_exception('error');
     }
 
-    if (empty($scheduler->bulkbook)) {
+    if (!$scheduler->bulkbook) {
         throw new moodle_exception('nopermissions');
     }
 
