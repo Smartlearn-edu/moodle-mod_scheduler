@@ -236,8 +236,14 @@ if (!$canseefull && $bookablecnt == 0) {
 
     echo $output->heading(get_string('availableslots', 'scheduler'), 3);
     if ($canbook) {
-        echo html_writer::div($bookingmsg1, 'studentbookingmessage');
-        echo html_writer::div($bookingmsg2, 'studentbookingmessage');
+        if (!empty($scheduler->bulkbook)) {
+            echo html_writer::div(get_string('bulkbook_message', 'scheduler'), 'studentbookingmessage');
+            $bulkbookurl = new moodle_url($actionurl, array('what' => 'bookallslots', 'sesskey' => sesskey()));
+            echo html_writer::div($output->single_button($bulkbookurl, get_string('bookallslots', 'scheduler'), 'post'), 'studentbookingmessage');
+        } else {
+            echo html_writer::div($bookingmsg1, 'studentbookingmessage');
+            echo html_writer::div($bookingmsg2, 'studentbookingmessage');
+        }
     }
     if ($total > $pagesize) {
         echo $output->paging_bar($total, $offset, $pagesize, $actionurl, 'offset');

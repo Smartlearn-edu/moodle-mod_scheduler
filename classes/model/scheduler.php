@@ -1047,6 +1047,10 @@ class scheduler extends mvc_record_model {
     public function count_bookable_appointments($studentid, $includechangeable = true) {
         global $DB;
 
+        if (!empty($this->bulkbook)) {
+            return -1;
+        }
+
         // Find how many slots have already been booked.
         $sql = 'SELECT COUNT(*) FROM {scheduler_slots} s'
               .' JOIN {scheduler_appointment} a ON s.id = a.slotid'
