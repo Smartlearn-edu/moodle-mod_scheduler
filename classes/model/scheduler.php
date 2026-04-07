@@ -1047,8 +1047,8 @@ class scheduler extends mvc_record_model {
     public function count_bookable_appointments($studentid, $includechangeable = true) {
         global $DB;
 
-        // Note: cannot use empty() here as the model uses __get magic without __isset.
-        if ($this->data->bulkbook) {
+        // Note: cannot use empty() here on the model if we use magic __get. But using $this->data is a stdClass, so property_exists is safest.
+        if (property_exists($this->data, 'bulkbook') && $this->data->bulkbook) {
             return -1;
         }
 
